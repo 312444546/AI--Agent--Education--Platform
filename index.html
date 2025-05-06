@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 学习资源推荐</title>
+</head>
+<body>
+    <h1>欢迎使用 AI 学习资源推荐</h1>
+    <p>请输入你的学习需求：</p>
+    <input type="text" id="user-input" placeholder="输入学习目标..." />
+    <button onclick="getRecommendation()">获取推荐</button>
+    <p>推荐资源：</p>
+    <div id="recommendation"></div>
+
+    <script>
+        function getRecommendation() {
+            let userInput = document.getElementById("user-input").value;
+            fetch('http://127.0.0.1:5000/recommend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_input: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("recommendation").innerText = data.recommendation;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
